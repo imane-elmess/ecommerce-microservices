@@ -1,0 +1,92 @@
+services:
+  config-server:
+    build: ./config-server
+    container_name: config-server
+    ports:
+      - "9101:8080"
+    environment:
+      SPRING_APPLICATION_NAME: config-server
+      SERVER_PORT: 8080
+      # 👉 IMPORTANT: ton repo Git de config (celui que tu utilises déjà)
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: https://github.com/imane-elmess/ecommerce-config-repo.git
+
+  eureka-server:
+    build: ./eureka-server
+    container_name: eureka-server
+    ports:
+      - "9102:8080"
+    environment:
+      SPRING_APPLICATION_NAME: eureka-server
+      SERVER_PORT: 8080
+      # Eureka peut aussi prendre config depuis config-server (si tu veux)
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8080
+
+    depends_on:
+      - config-server
+
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "9004:8080"
+    environment:
+      SPRING_APPLICATION_NAME: gateway
+      SERVER_PORT: 8080
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8080
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8080/eureka
+    depends_on:
+      - config-server
+      - eureka-server
+
+  microservice-produits:
+    build: ./microservice-produits
+    container_name: microservice-produits
+    ports:
+      - "9001:8080"
+    environment:
+      SPRING_APPLICATION_NAME: microservice-produits
+      SERVER_PORT: 8080
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8080
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8080/eureka
+    depends_on:
+      - config-server
+      - eureka-server
+
+  microservice-commandes:
+    build: ./microservice-commandes
+    container_name: microservice-commandes
+    ports:
+      - "9002:8080"
+    environment:
+      SPRING_APPLICATION_NAME: microservice-commandes
+      SERVER_PORT: 8080
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8080
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8080/eureka
+    depends_on:
+      - config-server
+      - eureka-server
+      - microservice-produits
+
+  front-api:
+    build: ./front-api
+    container_name: front-api
+    ports:
+      - "9003:8080"
+    environment:
+      SPRING_APPLICATION_NAME: front-api
+      SERVER_PORT: 8080
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8080
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8080/eureka
+    depends_on:
+      - config-server
+      - eureka-server
+      - microservice-produits
+      - microservice-commandes
+
+  front-react:
+    build: ./front-react
+    container_name: front-react
+    ports:
+      - "5173:80"
+    depends_on:
+      - gateway
