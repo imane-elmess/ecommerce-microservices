@@ -5,7 +5,7 @@ import { useAuth } from '../auth/AuthContext.jsx'
 
 function OrdersPage() {
   const navigate = useNavigate()
-  const { logout } = useAuth()
+  const { logout, role } = useAuth()
   const [orders, setOrders] = useState([])
   const [error, setError] = useState('')
   const [formError, setFormError] = useState('')
@@ -54,18 +54,68 @@ function OrdersPage() {
 
   return (
     <div className="page">
+      <nav className="navbar">
+        <div className="nav-left">
+          <span className="brand">
+            <i className="ri-store-2-line" />
+            E-Shop
+          </span>
+          <span className="role-badge">
+            <i className="ri-shield-user-line" />
+            {role || 'UNKNOWN'}
+          </span>
+        </div>
+        <div className="nav-links">
+          <Link to="/catalog">
+            <i className="ri-store-3-line" />
+            Catalogue
+          </Link>
+          <Link to="/orders">
+            <i className="ri-file-list-3-line" />
+            Commandes
+          </Link>
+          <button type="button" className="ghost-button" onClick={handleLogout}>
+            <i className="ri-logout-box-line" />
+            Logout
+          </button>
+        </div>
+      </nav>
       <header className="page-header">
         <div>
           <h1>Commandes</h1>
           <p className="subtitle">Historique et creation de commandes.</p>
         </div>
-        <div className="actions">
-          <Link to="/catalog">Voir le catalogue</Link>
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
       </header>
+
+      <section className="stats-grid">
+        <article className="stat-card">
+          <div className="stat-icon">
+            <i className="ri-shopping-cart-2-line" />
+          </div>
+          <div>
+            <p className="stat-label">Commandes jour</p>
+            <h3>36</h3>
+          </div>
+        </article>
+        <article className="stat-card">
+          <div className="stat-icon">
+            <i className="ri-time-line" />
+          </div>
+          <div>
+            <p className="stat-label">Traitement</p>
+            <h3>2h</h3>
+          </div>
+        </article>
+        <article className="stat-card">
+          <div className="stat-icon">
+            <i className="ri-shield-check-line" />
+          </div>
+          <div>
+            <p className="stat-label">Succes</p>
+            <h3>98%</h3>
+          </div>
+        </article>
+      </section>
 
       <section className="card">
         <h2>Passer une commande</h2>

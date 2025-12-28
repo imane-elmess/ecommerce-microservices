@@ -15,6 +15,78 @@
   justify-content: center;
 }
 
+.navbar {
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.brand i {
+  font-size: 20px;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-links a,
+.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(148, 163, 184, 0.25);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-links a:hover,
+.ghost-button:hover {
+  background: rgba(148, 163, 184, 0.4);
+  transform: translateY(-1px);
+}
+
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -39,6 +111,48 @@
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #64748b;
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+  font-size: 20px;
 }
 
 .card {
@@ -194,5 +308,10 @@ a:hover {
   .actions {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
